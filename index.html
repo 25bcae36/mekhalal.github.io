@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mekha Lal - Student Database System | BCA Project</title>
+    <title>Mekha Lal - BCA Student Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -14,8 +14,8 @@
                 <h2>Mekha Lal</h2>
                 <ul>
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#database">Database</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -24,54 +24,62 @@
 
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1>Mekha Lal</h1>
-            <p>1st Year BCA Student | Kristu Jayanti College<br>Student Database Management System</p>
-            <a href="#database" class="btn">Try Database</a>
+            <h1>Hi, I'm Mekha Lal</h1>
+            <p>1st Year BCA Student | Java, Python, SQL, Data Analysis | Kristu Jayanti College</p>
+            <a href="#projects" class="btn">My Projects</a>
         </div>
     </section>
 
-    <section id="skills" class="about">
-        <h2>Skills & Projects</h2>
+    <section id="about" class="about">
+        <h2>About Me</h2>
         <div class="about-content">
-            <p>Skills: Java, HTML/CSS, C, Python, SQL, Data Analysis</p>
+            <p>1st Year BCA student passionate about programming and data analysis. Skilled in multiple languages and building practical projects.</p>
             <div class="skills">
-                <h3>Projects</h3>
+                <h3>Skills</h3>
                 <ul>
-                    <li>Traffic Accidents Data Analysis (Python)</li>
-                    <li>Salary Prediction Model (Python/ML)</li>
-                    <li>Student Database System (HTML/CSS/JS)</li>
+                    <li>Java (Basics)</li>
+                    <li>HTML & CSS</li>
+                    <li>C Programming</li>
+                    <li>Python</li>
+                    <li>SQL</li>
+                    <li>Data Analysis</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <section id="database" class="database-section">
-        <h2>Student Database System</h2>
-        <p>Total Students: <span id="count">0</span></p>
-        
-        <form id="studentForm" class="form-container">
-            <h3>Add New Student</h3>
-            <input type="text" id="name" placeholder="Full Name" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="tel" id="phone" placeholder="Phone" required>
-            <input type="text" id="course" placeholder="Course (BCA/B.Com)" required>
-            <input type="number" id="marks" placeholder="Marks (0-100)" max="100" min="0" required>
-            <button type="submit" class="btn">Add Student</button>
-        </form>
-
-        <div id="studentsList" class="students-container">
-            <p>No students added yet. Try adding some!</p>
+    <section id="projects" class="projects">
+        <h2>My Projects</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <h3>Traffic Accidents Data Analysis</h3>
+                <p>Analyzed traffic accident datasets to identify patterns, causes, and prevention strategies using Python and data visualization.</p>
+                <a href="#" class="btn">View Project</a>
+            </div>
+            <div class="project-card">
+                <h3>Salary Prediction Model</h3>
+                <p>Built basic ML model to predict salaries based on experience, education, and skills using Python and statistical analysis.</p>
+                <a href="#" class="btn">View Project</a>
+            </div>
+            <div class="project-card">
+                <h3>BCA Portfolio Website</h3>
+                <p>Fully responsive personal portfolio built with HTML, CSS, JavaScript for 1st year college project.</p>
+                <a href="#" class="btn">Live Demo</a>
+            </div>
         </div>
-        <button id="clearAll" class="btn btn-danger">Clear All Data</button>
     </section>
 
     <section id="contact" class="contact">
-        <h2>Contact</h2>
-        <p>Email: <a href="mailto:25bcae36@kristujayanti.com">25bcae36@kristujayanti.com</a><br>Phone: +91-807XXXXXXX</p>
+        <h2>Get In Touch</h2>
+        <p>Email: <a href="mailto:25bcae36@kristujayanti.com">25bcae36@kristujayanti.com</a> | Phone: +91-807XXXXXXX</p>
+        <div class="social-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
+        </div>
     </section>
 
     <footer>
-        <p>© 2026 Mekha Lal | BCA 1st Year | Kristu Jayanti College | Database Project</p>
+        <p>© 2026 Mekha Lal | BCA 1st Year | Kristu Jayanti College | Made with ❤️</p>
     </footer>
 
     <script src="script.js"></script>
