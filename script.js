@@ -1,188 +1,90 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+// Backend Database - Contact Storage
+let contacts = JSON.parse(localStorage.getItem('mekhaContacts')) || [];
+
+// Initialize app
+document.addEventListener('DOMContentLoaded', function() {
+    updateStats();
+    displayContacts();
+    
+    // Form handler
+    document.getElementById('contactForm').addEventListener('submit', handleSubmit);
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    });
+});
+
+function handleSubmit(e) {
+    e.preventDefault();
+    
+    const contact = {
+        id: Date.now(),
+        name: document.getElementById('name').value,
+        age: document.getElementById('age').value,
+        email: document.getElementById('email').value,
+        date: new Date().toLocaleDateString('en-IN'),
+        time: new Date().toLocaleTimeString('en-IN', {hour: '2-digit', minute: '2-digit'})
+    };
+    
+    // Add to database (newest first)
+    contacts.unshift(contact);
+    localStorage.setItem('mekhaContacts', JSON.stringify(contacts));
+    
+    // Reset form
+    e.target.reset();
+    
+    // Update UI
+    updateStats();
+    displayContacts();
+    showStatus('✅ Contact saved to database!', 'success');
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: #333;
-}
-
-nav {
-    background: #fff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-}
-
-nav ul li {
-    margin-left: 2rem;
-}
-
-nav a {
-    text-decoration: none;
-    color: #28a745;
-    font-weight: 600;
-    transition: color 0.3s;
-}
-
-nav a:hover {
-    color: #1e7e34;
-}
-
-.hero {
-    background: linear-gradient(135deg, #28a745, #20c997);
-    color: white;
-    text-align: center;
-    padding: 150px 2rem 100px;
-    margin-top: 70px;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.btn {
-    display: inline-block;
-    background: #fd7e14;
-    color: white;
-    padding: 12px 30px;
-    text-decoration: none;
-    border-radius: 50px;
-    font-weight: 600;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-section {
-    padding: 80px 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: #333;
-}
-
-.about {
-    background: #f8f9fa;
-}
-
-.about-content {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.skills ul {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.skills li {
-    background: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
-    list-style: none;
-}
-
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.project-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: transform 0.3s;
-}
-
-.project-card:hover {
-    transform: translateY(-5px);
-}
-
-.contact {
-    text-align: center;
-    background: #f8f9fa;
-}
-
-.contact a {
-    color: #28a745;
-    text-decoration: none;
-}
-
-.social-links {
-    margin-top: 2rem;
-}
-
-.social-links a {
-    display: inline-block;
-    margin: 0 1rem;
-    color: #28a745;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-footer {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 2rem;
-}
-
-@media (max-width: 768px) {
-    .nav-container {
-        flex-direction: column;
+function displayContacts() {
+    const container = document.getElementById('contactsDisplay');
+    const liveCount = document.getElementById('liveCount');
+    
+    liveCount.textContent = contacts.length;
+    
+    if (contacts.length === 0) {
+        container.innerHTML = '<div class="contact-card"><p style="text-align:center;color:#94a3b8;">No contacts yet. Be the first!</p></div>';
+        return;
     }
-    nav ul {
-        margin-top: 1rem;
-    }
-    nav ul li {
-        margin: 0 1rem;
-    }
-    .hero h1 {
-        font-size: 2rem;
-    }
+    
+    container.innerHTML = contacts.slice(0, 10).map(contact => `
+        <div class="contact-card">
+            <div class="contact-info-section">
+                <h5>${contact.name}</h5>
+                <p><strong>Age:</strong> ${contact.age} | <strong>Email:</strong> ${contact.email}</p>
+                <p style="color:#64748b;font-size:0.9rem;">${contact.date} ${contact.time}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function updateStats() {
+    document.getElementById('totalContacts').textContent = contacts.length;
+    document.getElementById('liveCount').textContent = contacts.length;
+    
+    // Today count
+    const today = new Date().toLocaleDateString('en-IN');
+    const todayCount = contacts.filter(c => c.date === today).length;
+    document.getElementById('todayContacts').textContent = todayCount;
+}
+
+function showStatus(message, type) {
+    const status = document.getElementById('formStatus');
+    status.textContent = message;
+    status.className = `status ${type}`;
+    
+    setTimeout(() => {
+        status.className = 'status';
+        status.textContent = '';
+    }, 4000);
 }
