@@ -1,87 +1,188 @@
-// Student Database using LocalStorage
-let students = JSON.parse(localStorage.getItem('mekhaStudents')) || [];
-
-// Form submission
-document.getElementById('studentForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const student = {
-        id: Date.now(),
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        course: document.getElementById('course').value,
-        marks: parseInt(document.getElementById('marks').value),
-        date: new Date().toLocaleDateString()
-    };
-    
-    students.push(student);
-    localStorage.setItem('mekhaStudents', JSON.stringify(students));
-    this.reset();
-    displayStudents();
-    updateCount();
-    alert('✅ Student added to database!');
-});
-
-// Display students
-function displayStudents() {
-    const container = document.getElementById('studentsList');
-    
-    if (students.length === 0) {
-        container.innerHTML = '<p style="text-align:center;color:#666;">No students in database. Add your first student!</p>';
-        return;
-    }
-    
-    container.innerHTML = students.map(student => `
-        <div class="student-card">
-            <div>
-                <h4>${student.name}</h4>
-                <p><strong>Course:</strong> ${student.course} | <strong>Marks:</strong> ${student.marks}/100</p>
-                <p><strong>Email:</strong> ${student.email}</p>
-                <p><strong>Phone:</strong> ${student.phone}</p>
-                <p><small>Added: ${student.date}</small></p>
-            </div>
-            <button class="delete-btn" onclick="deleteStudent(${student.id})">Delete</button>
-        </div>
-    `).join('');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Update count
-function updateCount() {
-    document.getElementById('count').textContent = students.length;
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
 }
 
-// Delete student
-function deleteStudent(id) {
-    if (confirm('Delete this student record?')) {
-        students = students.filter(student => student.id !== id);
-        localStorage.setItem('mekhaStudents', JSON.stringify(students));
-        displayStudents();
-        updateCount();
-    }
+nav {
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
 }
 
-// Clear all data
-document.getElementById('clearAll').addEventListener('click', function() {
-    if (confirm('Delete ALL student records? This cannot be undone!')) {
-        students = [];
-        localStorage.removeItem('mekhaStudents');
-        displayStudents();
-        updateCount();
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 2rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: #28a745;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #1e7e34;
+}
+
+.hero {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    text-align: center;
+    padding: 150px 2rem 100px;
+    margin-top: 70px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn {
+    display: inline-block;
+    background: #fd7e14;
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+section {
+    padding: 80px 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.about {
+    background: #f8f9fa;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.skills ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.skills li {
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    list-style: none;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.contact {
+    text-align: center;
+    background: #f8f9fa;
+}
+
+.contact a {
+    color: #28a745;
+    text-decoration: none;
+}
+
+.social-links {
+    margin-top: 2rem;
+}
+
+.social-links a {
+    display: inline-block;
+    margin: 0 1rem;
+    color: #28a745;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
     }
-});
-
-// Initialize
-displayStudents();
-updateCount();
-
-// Smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    });
-});
+    nav ul {
+        margin-top: 1rem;
+    }
+    nav ul li {
+        margin: 0 1rem;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
